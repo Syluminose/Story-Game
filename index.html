@@ -3,8 +3,8 @@
 // MIT License © 2025-2026 Syluminose
 let lp=z=>(u,v)=>{for(;u<v;u++)z(u)},l2=z=>(u,v,w,x)=>{for(;u<v;u++)for(let y=w;y<x;y++)z(u,y)},
 P1=1.5708,P2=6.2832,B=new ArrayBuffer(4194304),F=new Float32Array(B),I=new Int32Array(B),U=new Uint32Array(B),urd=new Uint32Array(B,1024,64),
-D=document,drt=D.documentElement,C3=D.createElement("canvas"),C2=D.createElement("canvas"),
-lm=D.createElement("link"),li=D.createElement("link"),la=D.createElement("link"),m0=D.createElement("meta"),m1=D.createElement("meta"),
+D=document,drt=D.documentElement,cel=u=>D.createElement(u),apd=u=>drt.appendChild(u),
+C3=cel("canvas"),C2=cel("canvas"),lm=cel("link"),li=cel("link"),la=cel("link"),m0=cel("meta"),m1=cel("meta"),
 G=C3.getContext("webgl2",{antialias:!0,preserveDrawingBuffer:!0}),X=C2.getContext("2d"),
 EM=["🏃","🦅","⛏️","🔨","💤","⚔️","✒️","💬","🧗","🏊","🎨","🎁","🧭","🗺️","🧰","🗝️","🗡️","🛡️","👑","🏆","⛺","🔥","🪢","💎","🐉","👻","🧙","🧪","🔮","🦄","🌀","📖","🪄","🦉","🍄","🧞","🚀","🪐","🤖","👽","⭐","🛰️","☄️","⚡","🌌","👩‍🚀","🛸","🔭","🔍","🐾","🕰️","🎭","🔒","✉️","👤","⏳","🧤","📸","📰","⚖️","🌳","⛰️","🌊","☀️","🌙","⛈️","🌸","🌋","🐺","🐍","❄️","🌈","💥","🕯️","🕊️","❤️","🎯","💭","🥀","🤝","🎈","🧊","🦁","💡","🏰","🗼","🌉","⛵","🚂","🌲","🕳️","🏛️","🏝️","🏜️","🎪","🏠"],
 CL=["#0284c7","#d97706","#9333ea","#059669","#dc2626","#65a30d","#e11d48","#2563eb"],
@@ -93,15 +93,12 @@ F[756]=-F[760]*F[763];F[757]=F[761];F[758]=F[760]*F[762];FNI(0,3);
 I[410]=I[320+u];I[411]=I[352+u];X.save();X.translate((F[v]*.5+.5)*W,(.5-F[v+1]*.5)*H);
 I[403]=0;FNG(0,6);I[403]=1;FNG(0,6);X.restore()},
 F8=lp(f8),
+fnb=u=>{let v=u?u>1?W*.825:W*.655:W*.025,w=u?W*.15:W*.61;X.fillStyle=u?"#1e293b":"#0284c7";
+X.beginPath();X.roundRect(v,H*.885,w,H*.088,VM*1.8);X.fill();X.strokeStyle=u===1?"#eab308":"#38bdf8";
+X.lineWidth=VM*.35;X.stroke();X.font=VM*(u?3.6:4.6)+"px sans-serif";X.fillStyle="#f8fafc";
+X.fillText(u?u>1?"⛶":"🔓":"🎲",v+w*.5,H*.931)},FNB=lp(fnb),
 ui=()=>{X.clearRect(0,0,W,H);X.textAlign="center";X.textBaseline="middle";
-X.font=VM*3.4+"px sans-serif";F7(0,16);X.font=(F[749]*1.25|0)+"px sans-serif";F8(0,ND);
-let u=H*.885,v=H*.088;X.fillStyle="#0284c7";X.beginPath();X.roundRect(W*.025,u,W*.61,v,VM*1.8);X.fill();
-X.strokeStyle="#38bdf8";X.lineWidth=VM*.35;X.stroke();X.font=VM*4.6+"px sans-serif";
-X.fillText("🎲",W*.33,u+v*.52);
-X.fillStyle="#1e293b";X.beginPath();X.roundRect(W*.655,u,W*.15,v,VM*1.8);X.fill();X.strokeStyle="#eab308";X.stroke();
-X.font=VM*3.6+"px sans-serif";X.fillText("🔓",W*.73,u+v*.52);
-X.fillStyle="#1e293b";X.beginPath();X.roundRect(W*.825,u,W*.15,v,VM*1.8);X.fill();X.strokeStyle="#38bdf8";X.stroke();
-X.fillStyle="#f8fafc";X.fillText("⛶",W*.9,u+v*.52)},
+X.font=VM*3.4+"px sans-serif";F7(0,16);X.font=(F[749]*1.25|0)+"px sans-serif";F8(0,ND);FNB(0,3)},
 ck=(u,v)=>{if(v<H*.165){let w=(u-W*.024)/(W*.12)|0,x=(v-H*.018)/(H*.072)|0,y=(x<<3)+w;
 if(w>=0&&w<8&&x>=0&&x<2){let z=TM^(1<<y);TM=z?z:1<<y;FNC(0,16);rl()}}
 else if(v>H*.875){if(u<W*.645)rl();else if(u<W*.815){FNC(0,16);FNS(0,16);ui()}
@@ -116,13 +113,12 @@ G.beginTransformFeedback(G.POINTS);G.drawArrays(G.POINTS,0,ND);G.endTransformFee
 SY=G.fenceSync(G.SYNC_GPU_COMMANDS_COMPLETE,0);G.clientWaitSync(SY,G.SYNC_FLUSH_COMMANDS_BIT,0);G.deleteSync(SY);
 G.getBufferSubData(G.TRANSFORM_FEEDBACK_BUFFER,0,F,0,128);G.bindBufferBase(G.TRANSFORM_FEEDBACK_BUFFER,0,null);
 G.bindTransformFeedback(G.TRANSFORM_FEEDBACK,null);ui();T++;if(I[409])setTimeout(tk,16)};
-let ic="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23070b14' rx='36'/><text x='96' y='132' font-size='104' text-anchor='middle'>🎲</text></svg>";
-li.rel="icon";li.href=ic;la.rel="apple-touch-icon";la.href=ic;
-lm.rel="manifest";lm.href='data:application/manifest+json,'+encodeURIComponent(JSON.stringify({name:"Imagidés",short_name:"Imagidés",start_url:".",display:"fullscreen",background_color:"#070b14",theme_color:"#070b14",icons:[{src:ic,sizes:"192x192 512x512",type:"image/svg+xml",purpose:"any maskable"}]}));
+D.title="Story-Game";C2.width=C2.height=192;X.fillStyle="#070b14";X.fillRect(0,0,192,192);X.font="120px sans-serif";X.fillText("🎲",28,140);
+let ic=C2.toDataURL();li.rel="icon";li.href=la.href=ic;la.rel="apple-touch-icon";
+lm.rel="manifest";lm.href="data:application/manifest+json,"+encodeURIComponent('{"name":"Story-Game","short_name":"Story-Game","start_url":"'+location.href+'","scope":"'+location.href+'","display":"fullscreen","background_color":"#070b14","theme_color":"#070b14","icons":[{"src":"'+ic+'","sizes":"192x192 512x512","type":"image/png","purpose":"any"}]}');
 m0.name="mobile-web-app-capable";m0.content=m1.content="yes";m1.name="apple-mobile-web-app-capable";
-drt.appendChild(li);drt.appendChild(la);drt.appendChild(lm);drt.appendChild(m0);drt.appendChild(m1);
-drt.style.cssText=ST[0];C3.style.cssText=ST[1];C2.style.cssText=ST[2];
-drt.appendChild(C3);drt.appendChild(C2);F0(0,64,0,64);F1(0,16);
+apd(li);apd(la);apd(lm);apd(m0);apd(m1);drt.style.cssText=ST[0];C3.style.cssText=ST[1];C2.style.cssText=ST[2];
+apd(C3);apd(C2);F0(0,64,0,64);F1(0,16);
 if(localStorage.getItem(0)!==null){FNR(0,16);rs();ig();tk()}else{rs();ig();rl()}
 addEventListener("resize",()=>{rs();if(!I[409])tk()});C2.addEventListener("pointerdown",u=>ck(u.clientX*PR,u.clientY*PR));
 addEventListener("beforeinstallprompt",u=>{u.preventDefault();BIP=u});
