@@ -1,0 +1,120 @@
+<!DOCTYPE html><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><script>
+// MIT License © 2025-2026 Syluminose
+let lp=z=>(u,v)=>{for(;u<v;u++)z(u)},l2=z=>(u,v,w,x)=>{for(;u<v;u++)for(let y=w;y<x;y++)z(u,y)},
+B=new ArrayBuffer(4194304),F=new Float32Array(B),I=new Int32Array(B),U=new Uint32Array(B),urd=new Uint32Array(B,1024,64),
+D=document,drt=D.documentElement,C3=D.createElement("canvas"),C2=D.createElement("canvas"),
+G=C3.getContext("webgl2",{antialias:!0,preserveDrawingBuffer:!0}),X=C2.getContext("2d"),
+EM=["🏃","🦅","🧐","🔨","💤","⚔️","✒️","💬","🧗","🏊","🎭","🎁","🧭","🗺️","🧰","🗝️","🗡️","🛡️","👑","🏆","⛺","🔥","🪢","💎","🐉","👻","🧙","🧪","🔮","🦄","🌀","📖","🪄","🦉","🍄","🧞","🚀","🪐","🤖","👽","⭐","🛰️","☄️","⚡","🌌","👩‍🚀","🛸","🔭","🔎","🐾","🕰️","🎭","🔒","✉️","👤","⏳","🧤","📸","📰","⚖️","🌳","⛰️","🌊","☀️","🌙","⛈️","🌸","🌋","🐺","🐍","❄️","🌈","😊","😱","😡","❤️","😲","💭","🤫","🤝","😢","😂","🥶","💡","🏰","🗼","🌉","⛵","🚂","🌲","🕳️","🏛️","🏝️","🏜️","🎪","🏠"],
+CL=["#0284c7","#d97706","#9333ea","#059669","#dc2626","#65a30d","#e11d48","#2563eb"],
+BG=["#bae6fd","#fde68a","#e9d5ff","#a7f3d0","#fecaca","#d9f99d","#fecdd3","#bfdbfe","#7dd3fc","#fcd34d","#d8b4fe","#6ee7b7","#fca5a5","#bef264","#fda4af","#93c5fd","#38bdf8","#fbbf24","#c084fc","#34d399","#f87171","#a3e635","#fb7185","#60a5fa","#fef08a","#facc15","#eab308"],
+FC=[0,0,1,1,0,0,0,1,0,0,0,-1,-1,0,0,0,1,0,0,1,0,1,0,0,0,0,-1,0,-1,0,1,0,0,0,0,1,1,0,0,0,0,-1,0,1,0,-1,0,0,0,0,1,0,1,0],
+TA=[0,0,1.5708,-1.5708,0,0,0,3.1416,0,0,-1.5708,1.5708],
+ST=["margin:0;width:100dvw;height:100dvh;overflow:hidden;background:#070b14;user-select:none;font-family:system-ui,sans-serif","position:fixed;inset:0;width:100dvw;height:100dvh;pointer-events:none","position:fixed;inset:0;width:100dvw;height:100dvh;cursor:pointer"],
+VS=`#version 300 es
+precision highp float;layout(location=0)in vec4 a0;layout(location=1)in vec4 a1;
+layout(std140)uniform U{vec4 u0;};out vec4 v0;out vec4 v1;
+void main(){vec2 d=a1.xy-a0.xy,v=(a0.zw+d*u0.z)*u0.y,p=clamp(a0.xy+v,vec2(-.9,-.68),vec2(.9,.62));
+v0=vec4(p,v);v1=vec4(a1.xy,a1.z>.004?a1.z*.925:0.,a1.w);gl_Position=vec4(p,0.,1.);gl_PointSize=u0.w;}`,
+FS=`#version 300 es
+precision highp float;in vec4 v0;in vec4 v1;uniform sampler2D uT;layout(std140)uniform U{vec4 u0;};out vec4 o;
+void main(){int k=int(v1.w),m=k>>3,c0=k&7;float a=v1.z*v1.z*6.283,c=cos(a),s=sin(a);
+vec2 u=gl_PointCoord*2.-1.,r=mat2(c,s,-s,c)*u,q=abs(r)-.56;
+float d=length(max(q,0.))+min(max(q.x,q.y),0.)-.18;vec2 g=vec2(dFdx(d),dFdy(d));if(d>.16)discard;
+float b=smoothstep(.16,-.06,d),e=smoothstep(0.,-.22,d);vec4 t=texture(uT,r*.5+.5+v0.zw);
+vec3 p=c0==0?vec3(.22,.74,.97):c0==1?vec3(.98,.75,.14):c0==2?vec3(.75,.52,.99):c0==3?vec3(.2,.83,.6):c0==4?vec3(.97,.44,.44):c0==5?vec3(.64,.9,.21):c0==6?vec3(.98,.44,.52):vec3(.38,.65,.98);
+vec3 k0=m>0?vec3(1.,.85,.2):p;vec3 n=normalize(vec3(-g*14.,1.)),l=normalize(vec3(-.5,.7,u0.x));
+float h=pow(max(dot(n,l),0.),10.);o=vec4((k0*(.35+.65*e)+t.rgb*.08+h*.35)*b,b*.85);}`,
+P0,V0,V1,A0,A1,UB,TX,XF,SY,W=800,H=600,PR=1,VM=8,T=0,ND=16,TM=+localStorage.getItem("dm")&65535||65535,
+f0=(u,v)=>{let w=(u*64+v)*4+2048,x=Math.sin(u*.4)*Math.cos(v*.4)*.5+.5;F[w]=x;F[w+1]=x*.8;F[w+2]=1-x*.5;F[w+3]=1},
+F0=l2(f0),
+f1=u=>{let v=u*8;F[v]=F[v+1]=F[v+2]=F[v+3]=F[v+4]=F[v+5]=F[v+6]=0;I[320+u]=u;F[v+7]=u>>1},
+F1=lp(f1),
+f2=u=>{let v=I[404],w=(ND+v-1)/v|0,x=u/v|0,y=u-x*v,z=x===w-1?ND-x*v:v;
+F[u*8+4]=(y-(z-1)*.5)*(W>H?1.35/v:1.3/v);F[u*8+5]=((w-1)*.5-x)*(1.08/(w>1?w:1.8))-.03},
+F2=lp(f2),
+fnj=u=>{if(TM>>u&1){let v=0,w=0;for(;v<ND;v++)if(I[352+v]&&I[320+v]===u)w=1;if(!w)I[368+I[400]++]=u}},
+FNJ=lp(fnj),
+fnk=u=>{if(!I[352+u])I[384+I[405]++]=u},FNK=lp(fnk),
+fnl=u=>{let v=I[400]-1-u;if(v>0){let w=((U[256+u]&255)*(v+1))>>8,x=I[368+v];I[368+v]=I[368+w];I[368+w]=x}},FNL=lp(fnl),
+f3=u=>{let v=I[384+u],w=I[368+u],x=((U[272+v]&255)*6)>>8,y=v*8;
+I[320+v]=w;I[336+v]=x;F[y+2]=((U[288+v]&255)-128)*.0028;F[y+3]=((U[304+v]&255)-128)*.0028;F[y+6]=1;
+F[640+v]=TA[x];F[656+v]=TA[x+6];
+F[688+v]=((U[256+v]&1)?1:-1)*(((U[256+v]>>1&3)+2)*6.2832);
+F[704+v]=((U[272+v]&1)?1:-1)*(((U[272+v]>>1&3)+2)*6.2832);
+F[720+v]=((U[288+v]&1)?1:-1)*(((U[288+v]>>1&3)+1)*6.2832)},
+F3=lp(f3),
+fnm=u=>{F[u*8+7]=I[352+u]*8+(I[320+u]>>1)},FNM=lp(fnm),
+fnc=u=>{I[352+u]=0;F[u*8+7]=I[320+u]>>1},FNC=lp(fnc),
+fnd=u=>{let v=u*8,w=(F[v]*.5+.5)*W,x=(.5-F[v+1]*.5)*H;if(Math.hypot(I[401]-w,I[402]-x)<F[749]*1.45){
+I[352+u]^=1;F[v+7]=I[352+u]*8+(I[320+u]>>1)}},
+FND=lp(fnd),
+fni=u=>{let v=F[750+u],w=F[753+u],x=F[756+u],y=.978*v-.208*x,z=.208*v+.978*x;
+F[740+u]=y;F[743+u]=.978*w+.208*z;F[746+u]=-.208*w+.978*z},
+FNI=lp(fni),
+fng=u=>{let v=u*9,w=F[740]*FC[v]+F[741]*FC[v+1]+F[742]*FC[v+2],x=F[743]*FC[v]+F[744]*FC[v+1]+F[745]*FC[v+2],y=F[746]*FC[v]+F[747]*FC[v+1]+F[748]*FC[v+2],z=F[749];
+if(I[403]===0?y>.01&&y<=.38:I[403]===1?y>.38&&y<=.72:y>.72){X.save();
+X.transform(F[740]*FC[v+3]+F[741]*FC[v+4]+F[742]*FC[v+5],F[743]*FC[v+3]+F[744]*FC[v+4]+F[745]*FC[v+5],F[740]*FC[v+6]+F[741]*FC[v+7]+F[742]*FC[v+8],F[743]*FC[v+6]+F[744]*FC[v+7]+F[745]*FC[v+8],w*z,x*z);
+X.fillStyle=BG[I[411]?y>.72?24:y>.25?25:26:(I[410]>>1)+(y>.72?0:y>.25?8:16)];
+X.strokeStyle=I[411]?"#b45309":CL[I[410]>>1];X.lineWidth=VM*(I[411]?.48:.36);
+X.beginPath();X.roundRect(-z,-z,z*2,z*2,z*.24);X.fill();X.stroke();
+X.font=z*1.28+"px sans-serif";X.fillStyle="#0f172a";X.fillText(EM[I[410]*6+u],0,z*.08);
+if(I[411]&&y>.72){X.font=z*.44+"px sans-serif";X.fillText("🔒",z*.6,-z*.6)}X.restore()}},
+FNG=lp(fng),
+rl=()=>{crypto.getRandomValues(urd);let u=0,v=0;for(;u<16;u++)if(TM>>u&1)v++;ND=v||1;
+I[404]=W>H?(ND<4?ND:ND<7?3:4):(ND<3?ND:ND<5?2:ND<13?3:4);F2(0,ND);
+I[400]=0;I[405]=0;FNJ(0,16);FNK(0,ND);FNL(0,I[400]);F3(0,I[405]);FNM(0,ND)},
+f4=u=>{let v=G.createShader(u?G.FRAGMENT_SHADER:G.VERTEX_SHADER);G.shaderSource(v,u?FS:VS);G.compileShader(v);G.attachShader(P0,v)},
+F4=lp(f4),
+f5=u=>{G.bindVertexArray(u?A1:A0);G.bindBuffer(G.ARRAY_BUFFER,u?V1:V0);G.bufferData(G.ARRAY_BUFFER,4194304,G.DYNAMIC_COPY);
+G.bufferSubData(G.ARRAY_BUFFER,0,F,0,128);G.enableVertexAttribArray(0);G.vertexAttribPointer(0,4,G.FLOAT,!1,32,0);
+G.enableVertexAttribArray(1);G.vertexAttribPointer(1,4,G.FLOAT,!1,32,16)},
+F5=lp(f5),
+ig=()=>{P0=G.createProgram();F4(0,2);G.transformFeedbackVaryings(P0,["v0","v1"],G.INTERLEAVED_ATTRIBS);G.linkProgram(P0);G.useProgram(P0);
+V0=G.createBuffer();V1=G.createBuffer();A0=G.createVertexArray();A1=G.createVertexArray();F5(0,2);
+UB=G.createBuffer();G.bindBufferBase(G.UNIFORM_BUFFER,0,UB);G.bufferData(G.UNIFORM_BUFFER,16,G.DYNAMIC_DRAW);
+G.uniformBlockBinding(P0,G.getUniformBlockIndex(P0,"U"),0);TX=G.createTexture();G.activeTexture(G.TEXTURE0);G.bindTexture(G.TEXTURE_2D,TX);
+G.texParameteri(G.TEXTURE_2D,G.TEXTURE_MIN_FILTER,G.LINEAR);G.texParameteri(G.TEXTURE_2D,G.TEXTURE_MAG_FILTER,G.LINEAR);
+G.texImage2D(G.TEXTURE_2D,0,G.RGBA16F,64,64,0,G.RGBA,G.FLOAT,F,2048);XF=G.createTransformFeedback()},
+rs=()=>{PR=devicePixelRatio||1;W=innerWidth*PR|0;H=innerHeight*PR|0;C3.width=C2.width=W;C3.height=C2.height=H;VM=(W<H?W:H)*.01;
+I[404]=W>H?(ND<4?ND:ND<7?3:4):(ND<3?ND:ND<5?2:ND<13?3:4);F2(0,ND)},
+f7=u=>{let v=u&7,w=u>>3,x=W*.024+v*W*.12,y=H*.018+w*H*.072,z=TM>>u&1;
+X.fillStyle=z?BG[u>>1]:"#090d16";X.beginPath();X.roundRect(x,y,W*.108,H*.058,VM*1.4);X.fill();
+X.strokeStyle=z?CL[u>>1]:"#1e293b";X.lineWidth=VM*(z?.48:.2);X.stroke();
+X.globalAlpha=z?1:.28;X.font=VM*3.4+"px sans-serif";X.fillText(EM[u*6],x+W*.054,y+H*.031);X.globalAlpha=1},
+F7=lp(f7),
+f8=u=>{let v=u*8,w=F[v+6],x=w*w,y=F[640+u]+F[688+u]*x,z=F[656+u]+F[704+u]*x;
+F[760]=Math.cos(y);F[761]=Math.sin(y);F[762]=Math.cos(z);F[763]=Math.sin(z);F[764]=Math.cos(F[720+u]*x);F[765]=Math.sin(F[720+u]*x);
+F[750]=F[764]*F[762]-F[765]*F[761]*F[763];F[751]=-F[765]*F[760];F[752]=F[764]*F[763]+F[765]*F[761]*F[762];
+F[753]=F[765]*F[762]+F[764]*F[761]*F[763];F[754]=F[764]*F[760];F[755]=F[765]*F[763]-F[764]*F[761]*F[762];
+F[756]=-F[760]*F[763];F[757]=F[761];F[758]=F[760]*F[762];FNI(0,3);
+F[749]=VM*(ND<3?10.5:ND<5?9:ND<7?7.6:ND<10?6.4:ND<13?5.5:4.7)*(1+w*.22);I[410]=I[320+u];I[411]=I[352+u];
+X.save();X.translate((F[v]*.5+.5)*W,(.5-F[v+1]*.5)*H);
+X.fillStyle="rgba(0,0,0,.45)";X.beginPath();X.arc(F[749]*.14,F[749]*.22,F[749]*1.32,0,6.283);X.fill();
+I[403]=0;FNG(0,6);I[403]=1;FNG(0,6);I[403]=2;FNG(0,6);X.restore()},
+F8=lp(f8),
+ui=()=>{X.clearRect(0,0,W,H);X.textAlign="center";X.textBaseline="middle";F7(0,16);F8(0,ND);
+let u=H*.885,v=H*.088;X.fillStyle="#0284c7";X.beginPath();X.roundRect(W*.025,u,W*.61,v,VM*1.8);X.fill();
+X.strokeStyle="#38bdf8";X.lineWidth=VM*.35;X.stroke();X.font=VM*4.6+"px sans-serif";
+X.fillText("🎲",W*.33,u+v*.52);
+X.fillStyle="#1e293b";X.beginPath();X.roundRect(W*.655,u,W*.15,v,VM*1.8);X.fill();X.strokeStyle="#eab308";X.stroke();
+X.font=VM*3.6+"px sans-serif";X.fillText("🔓",W*.73,u+v*.52);
+X.fillStyle="#1e293b";X.beginPath();X.roundRect(W*.825,u,W*.15,v,VM*1.8);X.fill();X.strokeStyle="#38bdf8";X.stroke();
+X.fillStyle="#f8fafc";X.fillText("⛶",W*.9,u+v*.52)},
+ck=(u,v)=>{if(v<H*.165){let w=(u-W*.024)/(W*.12)|0,x=(v-H*.018)/(H*.072)|0,y=(x<<3)+w;
+if(w>=0&&w<8&&x>=0&&x<2){let z=TM^(1<<y);TM=z?z:1<<y;localStorage.setItem("dm",TM);FNC(0,16);rl()}}
+else if(v>H*.875){if(u<W*.645)rl();else if(u<W*.815)FNC(0,16);else{if(D.fullscreenElement)D.exitFullscreen();else drt.requestFullscreen()}}
+else{I[401]=u;I[402]=v;FND(0,ND)}},
+tk=async()=>{ui();G.enable(G.SCISSOR_TEST);G.viewport(0,0,W,H);G.scissor(0,H*.16|0,W,H*.71|0);G.clearColor(.03,.05,.09,1);
+G.clear(G.COLOR_BUFFER_BIT);G.enable(G.BLEND);G.blendFunc(G.SRC_ALPHA,G.ONE_MINUS_SRC_ALPHA);
+F[1024]=.8;F[1025]=.86;F[1026]=.12;F[1027]=F[749]*3.1;G.bindBuffer(G.UNIFORM_BUFFER,UB);G.bufferSubData(G.UNIFORM_BUFFER,0,F,1024,4);
+let u=T&1,v=u?A1:A0,w=u?V0:V1;G.bindBuffer(G.ARRAY_BUFFER,u?V1:V0);G.bufferSubData(G.ARRAY_BUFFER,0,F,0,128);
+G.bindVertexArray(v);G.bindTransformFeedback(G.TRANSFORM_FEEDBACK,XF);G.bindBufferBase(G.TRANSFORM_FEEDBACK_BUFFER,0,w);
+G.beginTransformFeedback(G.POINTS);G.drawArrays(G.POINTS,0,ND);G.endTransformFeedback();
+SY=G.fenceSync(G.SYNC_GPU_COMMANDS_COMPLETE,0);G.clientWaitSync(SY,G.SYNC_FLUSH_COMMANDS_BIT,0);G.deleteSync(SY);
+G.getBufferSubData(G.TRANSFORM_FEEDBACK_BUFFER,0,F,0,128);G.bindBufferBase(G.TRANSFORM_FEEDBACK_BUFFER,0,null);
+G.bindTransformFeedback(G.TRANSFORM_FEEDBACK,null);T++;setTimeout(tk,16)};
+drt.style.cssText=ST[0];C3.style.cssText=ST[1];C2.style.cssText=ST[2];
+drt.appendChild(C3);drt.appendChild(C2);F0(0,64,0,64);F1(0,16);rs();ig();rl();
+addEventListener("resize",rs);C2.addEventListener("pointerdown",u=>ck(u.clientX*PR,u.clientY*PR));
+C3.addEventListener("webglcontextlost",u=>u.preventDefault());C3.addEventListener("webglcontextrestored",()=>{ig();rl()});tk()</script>
