@@ -3,15 +3,15 @@
 // MIT License © 2025-2026 Syluminose
 let lp=z=>(u,v)=>{for(;u<v;u++)z(u)},l2=z=>(u,v,w,x)=>{for(;u<v;u++)for(let y=w;y<x;y++)z(u,y)},
 P1=1.5708,B=new ArrayBuffer(4194304),F=new Float32Array(B),I=new Int32Array(B),U=new Uint32Array(B),urd=new Uint32Array(B,1024,64),
-D=document,drt=D.documentElement,cel=u=>D.createElement(u),ael=addEventListener,cbg="#070b14",ssf="px sans-serif",sgm="Story-Game",lst=localStorage,
+D=document,drt=D.documentElement,cel=u=>D.createElement(u),ael=addEventListener,mmn=Math.min,scr=screen,cbg="#070b14",ssf="px sans-serif",sgm="Story-Game",lst=localStorage,
 C3=cel("canvas"),C2=cel("canvas"),lm=cel("link"),li=cel("link"),la=cel("link"),m0=cel("meta"),m1=cel("meta"),
 G=C3.getContext("webgl2",{antialias:!0,preserveDrawingBuffer:!0}),X=C2.getContext("2d"),
 gab=G.ARRAY_BUFFER,gtf=G.TRANSFORM_FEEDBACK_BUFFER,gub=G.UNIFORM_BUFFER,gtd=G.TEXTURE_2D,MP=G.getParameter(G.ALIASED_POINT_SIZE_RANGE)[1],D0,
 EM=["🏃","🦅","⛏️","🔨","💤","⚔️","✒️","💬","🧗","🏊","🎨","🎁","🧭","🗺️","🧰","🗝️","🗡️","🛡️","👑","🏆","⛺","🔥","🪢","💎","🐉","👻","🧙","🧪","🔮","🦄","🌀","📖","🪄","🦉","🍄","🧞","🚀","🪐","🤖","👽","⭐","🛰️","☄️","⚡","🌌","👩‍🚀","🛸","🔭","🔍","🐾","🕰️","🎭","🔒","✉️","👤","⏳","🧤","📸","📰","⚖️","🌳","⛰️","🌊","☀️","🌙","⛈️","🌸","🌋","🐺","🐍","❄️","🌈","💥","🕯️","🕊️","❤️","🎯","💭","🥀","🤝","🎈","🧊","🦁","💡","🏰","🗼","🌉","⛵","🚂","🌲","🕳️","🏛️","🏝️","🏜️","🎪","🏠"],
 CL=["#0284c7","#d97706","#9333ea","#059669","#dc2626","#65a30d","#e11d48","#2563eb"],
 BG=["#bae6fd","#fde68a","#e9d5ff","#a7f3d0","#fecaca","#d9f99d","#fecdd3","#bfdbfe"],
-TA=[0,0,1,-1,0,0,0,2,0,0,-1,1],S0="width:100dvw;height:100dvh;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;",sxy="position:fixed;inset:0;"+S0,
-ST=["margin:0;"+S0+"overflow:hidden;background:"+cbg+";font-family:system-ui,sans-serif",sxy+"pointer-events:none"],
+TA=[0,0,1,-1,0,0,0,2,0,0,-1,1],S0="width:100dvw;height:100dvh;",sxy="position:fixed;inset:0;"+S0,
+ST=["margin:0;"+S0+"overflow:hidden;background:"+cbg+";user-select:none;-webkit-tap-highlight-color:#0000;font-family:system-ui,sans-serif",sxy+"pointer-events:none"],
 shd="#version 300 es\nprecision highp float;precision highp int;",
 VS=shd+`layout(std140)uniform U{vec4 u0;};layout(location=0)in vec4 a0;layout(location=1)in vec4 a1;out vec4 v0;out vec4 v1;out mat3 v2;out vec3 v3;
 vec2 rt(vec2 p,float a){float c=cos(a),s=sin(a);return vec2(p.x*c-p.y*s,p.x*s+p.y*c);}
@@ -22,7 +22,8 @@ mat3 m=mat3(1);for(int i=0;i<3;i++){m[i].yz=rt(m[i].yz,.25);m[i].xz=rt(m[i].xz,-
 m[i].xy=rt(m[i].xy,rz);m[i].yz=rt(m[i].yz,rx);m[i].xz=rt(m[i].xz,ry);}
 v2=m;v3=(step(0.,-m[2])*2.-1.)/max(abs(m[2]),1e-4);gl_Position=vec4(p,0.,1.);gl_PointSize=u0.w;}`,
 FS=shd+`in vec4 v1;in mat3 v2;in vec3 v3;uniform sampler2D uT;out vec4 o;
-vec4 tx(int x,int y,vec2 p){return texture(uT,(vec2(x,y)+clamp(p+.5,.04,.96))/vec2(16.,8.));}
+vec4 tx(int x,int y,vec2 p){vec2 c=vec2(x,y)+.5,d=clamp(dFdx(p),-.09,.09),e=clamp(dFdy(p),-.09,.09),a=d*.125+e*.375,b=e*.125-d*.375,s=vec2(16,8);
+return(texture(uT,(c+clamp(p+a,-.46,.46))/s)+texture(uT,(c+clamp(p-a,-.46,.46))/s)+texture(uT,(c+clamp(p+b,-.46,.46))/s)+texture(uT,(c+clamp(p-b,-.46,.46))/s))*.25;}
 void main(){vec2 u=(gl_PointCoord*2.-1.)*1.56;if(dot(u,u)>2.4)discard;
 vec3 ro=v2*vec3(u,2.2),rd=-v2[2],n=v3*ro,ab=abs(v3),t1=-n-ab,t2=-n+ab,t3=t1+ab*.22,t4=t2-ab*.22,p;
 float tN=max(max(t1.x,t1.y),t1.z),tF=min(min(t2.x,t2.y),t2.z);if(tN>tF)discard;
@@ -38,9 +39,10 @@ vec2 q=abs(v)-.72;float r=length(max(q,0.))+min(max(q.x,q.y),0.)-.18;
 vec4 em=tx(d0,f,v*.55);if(l0>0&&nz>.7&&v.x>.08&&v.y<-.08){vec4 lk=tx(0,6,(v-vec2(.5,-.5))*1.8);em=em*(1.-lk.a)+lk;}
 vec3 cl=l0>0?vec3(.71,.33,.04):c0==0?vec3(.01,.52,.78):c0==1?vec3(.85,.47,.02):c0==2?vec3(.58,.2,.92):c0==3?vec3(.02,.59,.4):c0==4?vec3(.86,.15,.15):c0==5?vec3(.4,.64,.05):c0==6?vec3(.88,.11,.28):vec3(.15,.39,.92);
 vec3 bg=l0>0?mix(vec3(.92,.7,.03),vec3(1.,.98,.75),nz>.7?.85:nz>.22?.55:.2):mix(cl,vec3(1.),nz>.7?.78:nz>.22?.58:.36);
-o=vec4(mix(bg*(1.-em.a)+em.rgb,cl,smoothstep(-.07,-aa,r+dM*.4))*al,al);}`,
+o=vec4(mix(bg*(1.-em.a)+em.rgb,cl,smoothstep(-.06-aa/max(nz,.3),-aa,r+dM*.4))*al,al);}`,
 P0,V0,V1,A0,A1,UB,TX,XF,SY=0,BIP=0,W=800,H=600,PR=1,VM=8,T=0,ND=16,TM=+lst.getItem("dm")&65535||65535,
 fnt=u=>{X.textAlign="center";X.textBaseline="middle";X.font=u+ssf},fnh=u=>u-Math.round(u/6.2832)*6.2832,
+fnw=(u,v,w,x,y,z)=>{X.beginPath();X.roundRect(u,v,w,x,VM*y);X.fill();X.lineWidth=VM*z;X.stroke()},
 f0=u=>X.fillText(I[412]<12?EM[((I[412]&1)*8+u)*6+(I[412]>>1)]:"🔒",u*128+64,68),F0=lp(f0),
 fna=u=>{let v=D0[u|3]/255;F[2048+u]=(u&3)<3?D0[u]/255*v:v},FNA=lp(fna),
 fnq=u=>{X.clearRect(0,0,1024,128);I[412]=u;F0(0,8);D0=X.getImageData(0,0,1024,128).data;FNA(0,524288);
@@ -78,22 +80,20 @@ UB=G.createBuffer();G.bindBufferBase(gub,0,UB);G.bufferData(gub,16,G.DYNAMIC_DRA
 G.uniformBlockBinding(P0,G.getUniformBlockIndex(P0,"U"),0);XF=G.createTransformFeedback();G.bindTransformFeedback(G.TRANSFORM_FEEDBACK,XF);
 G.enable(G.SCISSOR_TEST);G.enable(G.BLEND);G.blendFunc(G.ONE,G.ONE_MINUS_SRC_ALPHA);G.clearColor(.03,.05,.09,1)},
 f7=u=>{let v=u&7,w=u>>3,x=W*.024+v*W*.12,y=H*.018+w*H*.072,z=TM>>u&1;
-X.fillStyle=z?BG[u>>1]:"#090d16";X.beginPath();X.roundRect(x,y,W*.108,H*.058,VM*1.4);X.fill();
-X.strokeStyle=z?CL[u>>1]:"#1e293b";X.lineWidth=VM*(z?.48:.2);X.stroke();
+X.fillStyle=z?BG[u>>1]:"#090d16";X.strokeStyle=z?CL[u>>1]:"#1e293b";fnw(x,y,W*.108,H*.058,1.4,z?.48:.2);
 X.globalAlpha=z?1:.28;X.fillText(EM[u*6],x+W*.054,y+H*.031);X.globalAlpha=1},
 F7=lp(f7),
-fnb=u=>{let v=u?u>1?W*.825:W*.655:W*.025,w=u?W*.15:W*.61;X.fillStyle=u?"#1e293b":"#0284c7";
-X.beginPath();X.roundRect(v,H*.885,w,H*.088,VM*1.8);X.fill();X.strokeStyle=u===1?"#eab308":"#38bdf8";
-X.lineWidth=VM*.35;X.stroke();fnt(VM*(u?3.6:4.6));X.fillStyle="#f8fafc";
+fnb=u=>{let v=u?u>1?W*.825:W*.655:W*.025,w=u?W*.15:W*.61;X.fillStyle=u?"#1e293b":CL[0];
+X.strokeStyle=u===1?"#eab308":"#38bdf8";fnw(v,H*.885,w,H*.088,1.8,.35);fnt(VM*(u?3.6:4.6));X.fillStyle="#f8fafc";
 X.fillText(u?u>1?"⛶":"🔓":"🎲",v+w*.5,H*.931)},FNB=lp(fnb),
 ui=()=>{X.clearRect(0,0,W,H);fnt(VM*3.4);F7(0,16);FNB(0,3)},
 sny=()=>{if(SY){G.clientWaitSync(SY,G.SYNC_FLUSH_COMMANDS_BIT,0);G.deleteSync(SY);SY=0}},
 up=u=>{sny();let v=I[409]>0;if(I[409]<u)I[409]=u;FNP(0,16);FNU(0,2);G.bindBuffer(gab,null);if(!v)tk()},
-rs=()=>{let u=0,v=0;PR=Math.min(devicePixelRatio||1,760/Math.min(innerWidth,innerHeight));W=innerWidth*PR|0;H=innerHeight*PR|0;
+rs=()=>{let u=0,v=0;PR=(devicePixelRatio||1)*mmn(1,mmn(scr.width,scr.height)/mmn(innerWidth,innerHeight));W=innerWidth*PR|0;H=innerHeight*PR|0;
 if(C2.width^W||C2.height^H){C3.width=C2.width=W;C3.height=C2.height=H;G.viewport(0,0,W,H);G.scissor(0,H*.16|0,W,H*.71|0)}VM=(W<H?W:H)*.01;
 for(;u<16;u++)if(TM>>u&1)v++;ND=v||1;
 let w=W>H?(ND<4?1:ND<9?2:3):(ND<3?1:ND<7?2:ND<10?3:4),x=(ND+w-1)/w|0,
-y=Math.min(W*.86/x,H*.64/w,VM*36);I[404]=ND/w|0;I[406]=w;I[407]=ND-I[404]*w;F[748]=y*2;F[749]=Math.min(y*.96,MP);F2(0,ND);ui()},
+y=mmn(W*.86/x,H*.64/w,VM*36);I[404]=ND/w|0;I[406]=w;I[407]=ND-I[404]*w;F[748]=y*2;F[749]=mmn(y*.96,MP);F2(0,ND);ui()},
 rsu=()=>{rs();up(1)},
 rl=u=>{FNE(0,ND);crypto.getRandomValues(urd);if(u)FNC(0,16);rs();I[400]=0;I[405]=0;FNJ(0,16);FNK(0,ND);FNL(0,I[400]);F3(0,I[405]);
 FNS(0,16);lst.setItem("dm",TM);up(80)},
@@ -112,8 +112,8 @@ D.title=sgm;C2.width=C2.height=192;X.fillStyle=cbg;X.fillRect(0,0,192,192);fnt(1
 let ic=C2.toDataURL();li.rel="icon";li.href=la.href=ic;la.rel="apple-touch-icon";
 lm.rel="manifest";lm.href="data:application/manifest+json,"+encodeURIComponent('{"name":"'+sgm+'","short_name":"'+sgm+'","start_url":"'+location.href+'","scope":"'+location.href+'","display":"fullscreen","background_color":"'+cbg+'","theme_color":"'+cbg+'","icons":[{"src":"'+ic+'","sizes":"192x192 512x512","type":"image/png","purpose":"any"}]}');
 m1.name="apple-"+(m0.name="mobile-web-app-capable");m0.content=m1.content="yes";
-drt.style.cssText=ST[0];C3.style.cssText=C2.style.cssText=ST[1];drt.append(li,la,lm,m0,m1,C3,C2);
+drt.style.cssText=ST[0];C3.style.cssText=ST[1];C2.style.cssText=sxy;drt.append(li,la,lm,m0,m1,C3,C2);
 F1(0,16);ig();if(lst.getItem(0)!==null){FNR(0,16);rsu()}else{rs();rl(0)}
-ael("resize",rsu);ael("pointerdown",u=>ck(u.clientX*PR,u.clientY*PR));
+ael("resize",rsu);C2.addEventListener("pointerdown",u=>ck(u.clientX*PR,u.clientY*PR));
 ael("beforeinstallprompt",u=>{u.preventDefault();BIP=u});
 C3.addEventListener("webglcontextlost",u=>u.preventDefault());C3.addEventListener("webglcontextrestored",()=>{ig();rsu()})</script>
