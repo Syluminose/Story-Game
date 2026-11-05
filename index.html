@@ -10,8 +10,8 @@ gab=G.ARRAY_BUFFER,gtf=G.TRANSFORM_FEEDBACK_BUFFER,gub=G.UNIFORM_BUFFER,gtd=G.TE
 EM=["🏃","🦅","⛏️","🔨","💤","⚔️","✒️","💬","🧗","🏊","🎨","🎁","🧭","🗺️","🧰","🗝️","🗡️","🛡️","👑","🏆","⛺","🔥","🪢","💎","🐉","👻","🧙","🧪","🔮","🦄","🌀","📖","🪄","🦉","🍄","🧞","🚀","🪐","🤖","👽","⭐","🛰️","☄️","⚡","🌌","👩‍🚀","🛸","🔭","🔍","🐾","🕰️","🎭","🔒","✉️","👤","⏳","🧤","📸","📰","⚖️","🌳","⛰️","🌊","☀️","🌙","⛈️","🌸","🌋","🐺","🐍","❄️","🌈","💥","🕯️","🕊️","❤️","🎯","💭","🥀","🤝","🎈","🧊","🦁","💡","🏰","🗼","🌉","⛵","🚂","🌲","🕳️","🏛️","🏝️","🏜️","🎪","🏠"],
 CL=["#0284c7","#d97706","#9333ea","#059669","#dc2626","#65a30d","#e11d48","#2563eb"],
 BG=["#bae6fd","#fde68a","#e9d5ff","#a7f3d0","#fecaca","#d9f99d","#fecdd3","#bfdbfe"],
-TA=[0,0,1,-1,0,0,0,2,0,0,-1,1],S0="width:100dvw;height:100dvh;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;",sxy="position:fixed;inset:0;"+S0,
-ST=["margin:0;"+S0+"overflow:hidden;background:"+cbg+";font-family:system-ui,sans-serif",sxy+"pointer-events:none"],
+TA=[0,0,1,-1,0,0,0,2,0,0,-1,1],S0="width:100dvw;height:100dvh;-webkit-tap-highlight-color:#0000;",sxy="position:fixed;inset:0;"+S0,
+ST=["margin:0;"+S0+"overflow:hidden;background:"+cbg+";user-select:none;font-family:system-ui,sans-serif",sxy+"pointer-events:none"],
 shd="#version 300 es\nprecision highp float;precision highp int;",
 VS=shd+`layout(std140)uniform U{vec4 u0;};layout(location=0)in vec4 a0;layout(location=1)in vec4 a1;out vec4 v0;out vec4 v1;out mat3 v2;out vec3 v3;
 vec2 rt(vec2 p,float a){float c=cos(a),s=sin(a);return vec2(p.x*c-p.y*s,p.x*s+p.y*c);}
@@ -112,8 +112,8 @@ D.title=sgm;C2.width=C2.height=192;X.fillStyle=cbg;X.fillRect(0,0,192,192);fnt(1
 let ic=C2.toDataURL();li.rel="icon";li.href=la.href=ic;la.rel="apple-touch-icon";
 lm.rel="manifest";lm.href="data:application/manifest+json,"+encodeURIComponent('{"name":"'+sgm+'","short_name":"'+sgm+'","start_url":"'+location.href+'","scope":"'+location.href+'","display":"fullscreen","background_color":"'+cbg+'","theme_color":"'+cbg+'","icons":[{"src":"'+ic+'","sizes":"192x192 512x512","type":"image/png","purpose":"any"}]}');
 m1.name="apple-"+(m0.name="mobile-web-app-capable");m0.content=m1.content="yes";
-drt.style.cssText=ST[0];C3.style.cssText=C2.style.cssText=ST[1];drt.append(li,la,lm,m0,m1,C3,C2);
+drt.style.cssText=ST[0];C3.style.cssText=ST[1];C2.style.cssText=sxy;drt.append(li,la,lm,m0,m1,C3,C2);
 F1(0,16);ig();if(lst.getItem(0)!==null){FNR(0,16);rsu()}else{rs();rl(0)}
-ael("resize",rsu);ael("pointerdown",u=>ck(u.clientX*PR,u.clientY*PR));
+ael("resize",rsu);C2.addEventListener("pointerdown",u=>ck(u.clientX*PR,u.clientY*PR));
 ael("beforeinstallprompt",u=>{u.preventDefault();BIP=u});
 C3.addEventListener("webglcontextlost",u=>u.preventDefault());C3.addEventListener("webglcontextrestored",()=>{ig();rsu()})</script>
