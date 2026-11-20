@@ -9,7 +9,7 @@ C3=cel("canvas"),C2=cel("canvas"),ctx={antialias:!0,preserveDrawingBuffer:!0},G=
 ifs=[cel("iframe"),cel("iframe")],lkm=cel("link"),lki=cel("link"),lka=cel("link"),mta=cel("meta"),mtb=cel("meta"),psv={passive:!0},
 P0=0,P1=0,V0=0,V1=0,A0=0,A1=0,vaq=0,UB=0,TX=0,txr=0,XF=0,SY=0,bip=0,lts=0,tgr=0,ssf="px system-ui,sans-serif",
 url=["Game1.html","Game2.html"],tit=["Collection de Jeux","Story-Game","Cartes Brise-Glace"],
-sub=["Dés 3D • 16 thèmes d'histoires","512 questions • 4 catégories"],ems=["🎲","🐉","🚀","🔮","🌋","👑","🍹","✨"],
+sub=["Dés 3D • 16 thèmes d'histoires","Questions • 4 catégories"],ems=["🎲","🐉","🚀","🔮","🌋","👑","🍹","✨"],
 cbd=["#38bdf8","#f472b6"],cfg=["#f8fafc","#fff8db"],csu=["#bae6fd","#fbcfe8"],cac=["#0284c7","#db2777"],
 blb=["🏠","🎲 Story-Game","🃏 Questions"],bpx=[.015,.145,.515,.885],bwd=[.115,.355,.355,.1],
 sxy="position:fixed;inset:0;width:100dvw;height:100dvh;",sfm="position:fixed;left:0;top:calc(4dvh + 3vmin);width:100dvw;height:calc(96dvh - 3vmin);border:0;",
@@ -125,7 +125,7 @@ X.fillStyle=cac[u];X.strokeStyle=cbd[u];fnw(w+y*.21,x+z*.76,y*.58,z*.15,3,.22+(.
 if(I[1+u]){X.fillStyle="#10b981";X.beginPath();X.arc(w+y-F[1]*2.6,x+F[1]*2.6,F[1]*(.85+(.5+.5*Math.sin(F[6]*3.5+u*1.4))*.35),0,6.2832);X.fill()}},CRD=lp(crd),
 bar=u=>{let v=20+(u<<2),w=F[v],x=F[v+1],y=F[v+2],z=F[v+3];if(u!==I[0]){X.fillStyle=I[3]===10+u?"#1e293b":"#0f172a";X.strokeStyle=I[3]===10+u?"#64748b":"#334155";fnw(w,x,y,z,1.4,.22)}
 fnt(mmn(z*.46,F[1]*3.4),u===I[0]?1:0);X.fillStyle=u===I[0]?"#fff":"#e2e8f0";X.fillText(u>2?bip?"📲":"⛶":blb[u],w+y*.5,x+z*.52,y*.88)},BAR=lp(bar),
-syn=u=>{let v=I[0]===u+1;if(v&&!I[1+u]){I[1+u]=1;ifs[u].src=url[u]}ifs[u].style.cssText=ST[v?3:4]},SYN=lp(syn),
+syn=u=>{let v=I[0]===u+1;if(v&&!I[1+u]){I[1+u]=1;ifs[u].src=url[u]+"?v="+Date.now()}ifs[u].style.cssText=ST[v?3:4]},SYN=lp(syn),
 pin=(u,v,w)=>u>=F[w]&&u<=F[w]+F[w+2]&&v>=F[w+1]&&v<=F[w+1]+F[w+3],
 htn=(u,v)=>I[0]?pin(u,v,20)?10:pin(u,v,24)?11:pin(u,v,28)?12:pin(u,v,32)?13:-1:pin(u,v,8)?0:pin(u,v,12)?1:pin(u,v,16)?2:-1,
 hdr=()=>{let u=I[5]*.078,v=F[6]*2.2,w=I[4]*.5,x=mmn(I[4]*.32,F[1]*28),y=F[1]*2.4,z=.55+.18*Math.sin(F[6]*2.8);fnt(F[1]*5,1);
